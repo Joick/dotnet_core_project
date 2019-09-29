@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RoadOfGrowth.IRepository;
 
 namespace RoadOfGrowth.Web.Controllers
 {
@@ -10,11 +11,16 @@ namespace RoadOfGrowth.Web.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public static ITestRepository _testRepository;
+        public ValuesController(ITestRepository testRepository)
+        {
+            _testRepository = testRepository;
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", _testRepository.DoTestRepository() };
         }
 
         // GET api/values/5

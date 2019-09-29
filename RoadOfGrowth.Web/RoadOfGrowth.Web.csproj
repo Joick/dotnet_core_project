@@ -6,15 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RoadOfGrowth.DataAccess\RoadOfGrowth.DataAccess.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Entity\RoadOfGrowth.Entity.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.ExternalService\RoadOfGrowth.ExternalService.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.IDataAccess\RoadOfGrowth.IDataAccess.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.IRepository\RoadOfGrowth.IRepository.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Model\RoadOfGrowth.Model.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.Repository\RoadOfGrowth.Repository.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Utility\RoadOfGrowth.Utility.csproj" />
   </ItemGroup>
 
