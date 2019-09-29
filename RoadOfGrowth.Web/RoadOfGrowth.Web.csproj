@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoadOfGrowth.Entity\RoadOfGrowth.Entity.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.ExternalService\RoadOfGrowth.ExternalService.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.IRepository\RoadOfGrowth.IRepository.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.Model\RoadOfGrowth.Model.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.Utility\RoadOfGrowth.Utility.csproj" />
+  </ItemGroup>
+
+</Project>
