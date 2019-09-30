@@ -21,7 +21,6 @@ namespace RoadOfGrowth.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            LogUtility.Info("asd");
             return new string[] { "value1", _testRepository.DoTestRepository() };
         }
 
