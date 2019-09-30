@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoadOfGrowth.Web.Middlewares;
 using RoadOfGrowth.Web.Registers;
 using System;
 
@@ -48,6 +49,9 @@ namespace RoadOfGrowth.Web
             }
 
             app.UseHttpsRedirection();
+
+            app.UseLogRequest();
+
             app.UseMvc();
 
             // 在程序停止时执行Autofac的释放函数
