@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RoadOfGrowth.IRepository;
+using RoadOfGrowth.Utility;
 
 namespace RoadOfGrowth.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace RoadOfGrowth.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            LogUtility.Info("asd");
             return new string[] { "value1", _testRepository.DoTestRepository() };
         }
 
