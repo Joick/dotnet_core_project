@@ -28,7 +28,7 @@ namespace RoadOfGrowth.Web.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return $"{1 / id}";
         }
 
         // POST api/values

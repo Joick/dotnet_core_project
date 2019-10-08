@@ -48,11 +48,17 @@ namespace RoadOfGrowth.Web
                 app.UseHsts();
             }
 
+            app.UseExceptionLog();
+
             app.UseHttpsRedirection();
 
             app.UseLogRequest();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "page", template: "{controller}/{action}");
+            });
+
 
             // 在程序停止时执行Autofac的释放函数
             appLifetime.ApplicationStopped.Register(() => { AutofacContainer.Dispose(); });
