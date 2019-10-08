@@ -15,9 +15,9 @@ namespace RoadOfGrowth.Web.Middlewares
     /// </summary>
     public class RequestLogMiddleware
     {
-        private static RequestDelegate _next;
+        static RequestDelegate _next;
 
-        private Stopwatch _stopwatch;
+        readonly Stopwatch _stopwatch;
 
         public RequestLogMiddleware(RequestDelegate next)
         {
@@ -30,20 +30,28 @@ namespace RoadOfGrowth.Web.Middlewares
             _stopwatch.Restart();
             HttpRequest request = context.Request;
 
-            LogRequest(request, out string timestamp);
+            bool isApiRequest = request.Path.HasValue && request.Path.Value.Contains("/api/");
 
-
-            var originalBodyStream = context.Response.Body;
-
-            using (var responseBody = new MemoryStream())
+            if (!isApiRequest)
             {
-                context.Response.Body = responseBody;
-
                 await _next(context);
+            }
+            else
+            {
+                LogRequest(request, out string timestamp);
 
-                LogResponseAsync(context.Response, timestamp);
+                var originalBodyStream = context.Response.Body;
 
-                await responseBody.CopyToAsync(originalBodyStream);
+                using (var responseBody = new MemoryStream())
+                {
+                    context.Response.Body = responseBody;
+
+                    await _next(context);
+
+                    await LogResponseAsync(context.Response, timestamp);
+
+                    await responseBody.CopyToAsync(originalBodyStream);
+                }
             }
         }
 
