@@ -15,7 +15,7 @@ namespace RoadOfGrowth.Web.Middlewares
     /// </summary>
     public class RequestLogMiddleware
     {
-        static RequestDelegate _next;
+        readonly RequestDelegate _next;
 
         readonly Stopwatch _stopwatch;
 
