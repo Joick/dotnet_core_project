@@ -42,7 +42,7 @@ namespace RoadOfGrowth.Utility
         /// get configuration object instance
         /// </summary>
         /// <returns></returns>
-        public static IConfiguration GetInstance()
+        private static IConfiguration GetInstance()
         {
             if (configuration == null)
             {
@@ -50,6 +50,34 @@ namespace RoadOfGrowth.Utility
             }
 
             return configuration;
+        }
+
+        /// <summary>
+        /// 获取区域对象值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetSectionValue(string key)
+        {
+            return GetInstance().GetSection(key).Value;
+        }
+
+        /// <summary>
+        /// 获取区域对象内指定键值
+        /// </summary>
+        /// <param name="section">区域名</param>
+        /// <param name="key">键</param>
+        /// <returns></returns>
+        public static string GetSectionValue(string section, string key)
+        {
+            var sectionObj = GetInstance().GetSection(section);
+
+            if (sectionObj != null)
+            {
+                return sectionObj.GetSection(key).Value;
+            }
+
+            return null;
         }
     }
 }
