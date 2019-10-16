@@ -14,14 +14,11 @@ namespace RoadOfGrowth.Utility
 
         static LogUtility()
         {
-            if (logger == null)
-            {
-                var repository = LogManager.CreateRepository("NETCoreRepository");
+            var repository = LogManager.CreateRepository("NETCoreRepository");
 
-                // 从log4net.config文件中获取配置信息
-                XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
-                logger = LogManager.GetLogger(repository.Name, "InfoLogger");
-            }
+            // 从log4net.config文件中获取配置信息
+            XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
+            logger = LogManager.GetLogger(repository.Name, "InfoLogger");
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace RoadOfGrowth.Utility
@@ -60,6 +61,77 @@ namespace RoadOfGrowth.Utility
         public static string GetSectionValue(string key)
         {
             return GetInstance().GetSection(key).Value;
+        }
+
+        /// <summary>
+        /// 获取指定键的值
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public static string GetSectionValueDeep(params string[] keys)
+        {
+            if (keys == null || keys.Length == 0)
+            {
+                return null;
+            }
+
+            IConfigurationSection section = GetInstance().GetSection(keys[0]);
+
+            if (section == null)
+            {
+                return null;
+            }
+
+            foreach (var key in keys)
+            {
+                section = section.GetSection(key);
+            }
+
+            return section.Value;
+        }
+
+        /// <summary>
+        /// 获取配置项对象
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public static Dictionary<string, object> GetSectionObjDeep(params string[] keys)
+        {
+            if (keys == null || keys.Length == 0)
+            {
+                return default;
+            }
+
+            IConfigurationSection section = GetInstance().GetSection(keys[0]);
+
+            if (section == null)
+            {
+                return default;
+            }
+
+            foreach (var key in keys)
+            {
+                section = section.GetSection(key);
+            }
+
+            return section.ToDictionary();
+        }
+
+        /// <summary>
+        /// 将Iconfigurationsection对象转换成字典
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        private static Dictionary<string, object> ToDictionary(this IConfigurationSection section)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+
+            foreach (var item in section.GetChildren())
+            {
+                data.Add(item.Key, item.Value);
+            }
+
+            return data;
         }
 
         /// <summary>
