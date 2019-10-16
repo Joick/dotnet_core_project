@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoadOfGrowth.Entity\RoadOfGrowth.Entity.csproj" />
-    <ProjectReference Include="..\RoadOfGrowth.IDataAccess\RoadOfGrowth.IDataAccess.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Model\RoadOfGrowth.Model.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Utility\RoadOfGrowth.Utility.csproj" />
   </ItemGroup>

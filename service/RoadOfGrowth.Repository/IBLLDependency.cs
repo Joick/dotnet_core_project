@@ -1,4 +1,4 @@
-﻿namespace RoadOfGrowth.IRepository
+﻿namespace RoadOfGrowth.Repository
 {
     /// <summary>
     /// 业务逻辑依赖基类

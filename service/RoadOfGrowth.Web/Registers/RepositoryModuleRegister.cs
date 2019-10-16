@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using RoadOfGrowth.IRepository;
+using RoadOfGrowth.Repository;
 using RoadOfGrowth.Utility;
 using System.Linq;
 
@@ -14,7 +14,7 @@ namespace RoadOfGrowth.Web.Registers
         {
             var dependencyObj = typeof(IBLLDependency);
             System.Reflection.Assembly[] assemblies =
-                AssemblyUtility.ListAssemblies("RoadOfGrowth.IRepository", "RoadOfGrowth.Repository");
+                AssemblyUtility.ListAssemblies("RoadOfGrowth.Repository");
 
             builder.RegisterAssemblyTypes(assemblies).Where(t => dependencyObj.IsAssignableFrom(t) && t != dependencyObj)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();

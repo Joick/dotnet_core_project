@@ -1,7 +1,4 @@
-﻿using RoadOfGrowth.IDataAccess;
-using System;
-
-namespace RoadOfGrowth.DataAccess
+﻿namespace RoadOfGrowth.DataAccess
 {
     public class TestDataAccess : ITestDataAccess
     {

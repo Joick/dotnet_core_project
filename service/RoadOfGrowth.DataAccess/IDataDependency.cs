@@ -1,4 +1,4 @@
-﻿namespace RoadOfGrowth.IDataAccess
+﻿namespace RoadOfGrowth.DataAccess
 {
     /// <summary>
     /// 数据传输依赖基类

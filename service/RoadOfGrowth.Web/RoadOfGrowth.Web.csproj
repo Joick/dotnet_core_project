@@ -23,8 +23,6 @@
     <ProjectReference Include="..\RoadOfGrowth.DataAccess\RoadOfGrowth.DataAccess.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Entity\RoadOfGrowth.Entity.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.ExternalService\RoadOfGrowth.ExternalService.csproj" />
-    <ProjectReference Include="..\RoadOfGrowth.IDataAccess\RoadOfGrowth.IDataAccess.csproj" />
-    <ProjectReference Include="..\RoadOfGrowth.IRepository\RoadOfGrowth.IRepository.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Model\RoadOfGrowth.Model.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Repository\RoadOfGrowth.Repository.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Utility\RoadOfGrowth.Utility.csproj" />
