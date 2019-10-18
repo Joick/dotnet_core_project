@@ -9,15 +9,19 @@ namespace RoadOfGrowth.DBWebService.Controllers
     public class ValuesController : ControllerBase
     {
         public static IUserService _userService;
-        public ValuesController(IUserService userService)
+        public static ILogService _logService;
+
+        public ValuesController(IUserService userService,ILogService logService)
         {
             _userService = userService;
+            _logService = logService;
         }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             string temp = _userService.GetUserAccount(1);
+            _logService.Insert();
             return new string[] { "value1", "value2", temp };
         }
 
