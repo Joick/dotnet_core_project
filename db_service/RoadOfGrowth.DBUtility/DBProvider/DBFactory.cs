@@ -6,60 +6,42 @@ namespace RoadOfGrowth.DBUtility
     /// <summary>
     /// 数据连接工厂
     /// </summary>
-    public static class DBContext
+    public static class DBFactory
     {
-        private static IDbConnection connection;
-
-        /// <summary>
-        /// 获取数据库连接实例
-        /// </summary>
-        /// <returns></returns>
-        public static IDbConnection GetInstance()
-        {
-            if (connection == null)
-            {
-                connection = InitConnection();
-            }
-
-            return connection;
-        }
-
         /// <summary>
         /// 初始化数据库连接实例
         /// </summary>
         /// <returns></returns>
-        private static IDbConnection InitConnection()
+        public static IDbConnection InitConnection(string dbName)
         {
+            IDbConnection connection;
+            var dbTypeName = ConfigUtility.GetSectionValueDeep("ConnectionConfigs", dbName, "dbType");
+
             //获取配置进行转换
-            var type = ConfigUtility.GetSectionValue("ComponentDbType");
-            var dbType = GetDataBaseType(type);
+            var dbType = GetDataBaseType(dbTypeName);
 
-            //DefaultDatabase 根据这个配置项获取对应连接字符串
-            var database = ConfigUtility.GetSectionValue("DefaultDatabase");
-            if (string.IsNullOrEmpty(database))
-            {
-                database = "mysql";//默认配置
-            }
-
-            var strConn = ConfigUtility.GetSectionValueDeep("ConnectionStrings", database);
+            var strConn = ConfigUtility.GetSectionValueDeep("ConnectionConfigs", dbName, "ConnectionString");
 
             switch (dbType)
             {
-                case DatabaseType.SqlServer:
-                    // connection = new System.Data.SqlClient.SqlConnection(strConn);
-                    break;
                 case DatabaseType.MySql:
                     connection = new MySql.Data.MySqlClient.MySqlConnection(strConn);
                     break;
-                case DatabaseType.Npgsql:
-                    //connection = new Npgsql.NpgsqlConnection(strConn);
-                    break;
-                case DatabaseType.Sqlite:
-                    //connection = new SQLiteConnection(strConn);
-                    break;
-                case DatabaseType.Oracle:
-                    //connection = new Oracle.ManagedDataAccess.Client.OracleConnection(strConn);
-                    //connection = new System.Data.OracleClient.OracleConnection(strConn);
+                //case DatabaseType.SqlServer:
+                //    //connection = new System.Data.SqlClient.SqlConnection(strConn);
+                //    break;
+                //case DatabaseType.Npgsql:
+                //    //connection = new Npgsql.NpgsqlConnection(strConn);
+                //    break;
+                //case DatabaseType.Sqlite:
+                //    //connection = new SQLiteConnection(strConn);
+                //    break;
+                //case DatabaseType.Oracle:
+                //    //connection = new Oracle.ManagedDataAccess.Client.OracleConnection(strConn);
+                //    //connection = new System.Data.OracleClient.OracleConnection(strConn);
+                //    break;
+                default:
+                    connection = null;
                     break;
                     //case DatabaseType.DB2:
                     //    //connection = new System.Data.OleDb.OleDbConnection(strConn);
@@ -90,5 +72,17 @@ namespace RoadOfGrowth.DBUtility
             return returnValue;
         }
 
+    }
+
+    /// <summary>
+    /// 数据库类型定义
+    /// </summary>
+    public enum DatabaseType
+    {
+        SqlServer,
+        MySql,
+        Oracle,
+        Sqlite,
+        Npgsql
     }
 }

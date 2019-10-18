@@ -3,7 +3,7 @@
     /// <summary>
     /// 用户
     /// </summary>
-    public interface IUserService : IDependency
+    public partial interface IUserService : IDependency
     {
         string GetUserAccount(int id);
     }
