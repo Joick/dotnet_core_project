@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoadOfGrowth.DataAccess\RoadOfGrowth.DataAccess.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Entity\RoadOfGrowth.Entity.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.ExternalService\RoadOfGrowth.ExternalService.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.Model\RoadOfGrowth.Model.csproj" />

@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.Web", "RoadOfGrowth.Web\RoadOfGrowth.Web.csproj", "{03691791-FF48-4E3B-8177-E7C1F9D38346}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.DataAccess", "RoadOfGrowth.DataAccess\RoadOfGrowth.DataAccess.csproj", "{690D7294-1178-4654-8002-CA8B7F3217A7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.Repository", "RoadOfGrowth.Repository\RoadOfGrowth.Repository.csproj", "{ADC2A29B-41B3-4D46-9926-5B56EA26580E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.Utility", "RoadOfGrowth.Utility\RoadOfGrowth.Utility.csproj", "{710682C0-256E-44DE-A1EE-BCBBBBACFE20}"
@@ -31,10 +29,6 @@ Global
 		{03691791-FF48-4E3B-8177-E7C1F9D38346}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03691791-FF48-4E3B-8177-E7C1F9D38346}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03691791-FF48-4E3B-8177-E7C1F9D38346}.Release|Any CPU.Build.0 = Release|Any CPU
-		{690D7294-1178-4654-8002-CA8B7F3217A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{690D7294-1178-4654-8002-CA8B7F3217A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{690D7294-1178-4654-8002-CA8B7F3217A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{690D7294-1178-4654-8002-CA8B7F3217A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ADC2A29B-41B3-4D46-9926-5B56EA26580E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADC2A29B-41B3-4D46-9926-5B56EA26580E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADC2A29B-41B3-4D46-9926-5B56EA26580E}.Release|Any CPU.ActiveCfg = Release|Any CPU

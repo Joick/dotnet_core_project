@@ -14,7 +14,7 @@ namespace RoadOfGrowth.Web
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public static IContainer AutofacContainer;
+        private IContainer AutofacContainer;
 
         public Startup(IConfiguration configuration)
         {
@@ -28,7 +28,6 @@ namespace RoadOfGrowth.Web
             // 使用Autofac注入
             ContainerBuilder builder = new ContainerBuilder();
 
-            builder.RegisterModule<DataAccessModuleRegister>();
             builder.RegisterModule<RepositoryModuleRegister>();
 
             builder.Populate(services);
