@@ -22,7 +22,7 @@ namespace RoadOfGrowth.Utility
         /// </summary>
         private static void InitConfiguration()
         {
-            const string fileName = "appsetting.json";
+            const string fileName = "appsettings.json";
             var directory = AppContext.BaseDirectory;
             directory = directory.Replace("\\", "/");
 

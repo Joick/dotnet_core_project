@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RoadOfGrowth.IRepository;
+using RoadOfGrowth.Repository;
 using RoadOfGrowth.Utility;
 
 namespace RoadOfGrowth.Web.Controllers
