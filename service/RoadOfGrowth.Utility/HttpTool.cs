@@ -4,15 +4,32 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace RoadOfGrowth.Utility
 {
     /// <summary>
     /// http请求帮助类
     /// </summary>
-    public static class HttpUtility
+    public static class HttpTool
     {
         private static readonly HttpClient instance = new HttpClient(new HttpClientHandler() { UseCookies = false });
+
+        /// <summary>
+        /// 发起get请求
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public static string Get(this string uri, object conditions = null)
+        {
+            var request = GetAsync(uri, conditions);
+
+            request.Wait();
+
+            return request.Result;
+        }
 
         /// <summary>
         /// 发起get请求
@@ -28,6 +45,22 @@ namespace RoadOfGrowth.Utility
             request.Wait();
 
             return request.Result;
+        }
+
+        /// <summary>
+        /// 发起get请求(异步)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public static async Task<string> GetAsync(this string uri, object conditions = null)
+        {
+            uri.AssemblyUri(conditions);
+
+            var response = await instance.GetAsync(uri);
+
+            return ConvertResponse(response);
         }
 
         /// <summary>
@@ -63,6 +96,22 @@ namespace RoadOfGrowth.Utility
         }
 
         /// <summary>
+        /// 发送post请求
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string Post(this string uri, object data)
+        {
+            var request = PostAsync(uri, data);
+
+            request.Wait();
+
+            return request.Result;
+        }
+
+        /// <summary>
         /// 发送post请求(异步)
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -81,6 +130,24 @@ namespace RoadOfGrowth.Utility
         }
 
         /// <summary>
+        /// 发送post请求(异步)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static async Task<string> PostAsync(this string uri, object data)
+        {
+            HttpContent content = new StringContent(SerializeObject(data));
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await instance.PostAsync(uri, content);
+
+            return ConvertResponse(response);
+        }
+
+        /// <summary>
         /// 发送HttpPut请求
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -90,6 +157,22 @@ namespace RoadOfGrowth.Utility
         public static T Put<T>(this string uri, object data)
         {
             var request = PutAsync<T>(uri, data);
+
+            request.Wait();
+
+            return request.Result;
+        }
+
+        /// <summary>
+        /// 发送HttpPut请求
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string Put(this string uri, object data)
+        {
+            var request = PutAsync(uri, data);
 
             request.Wait();
 
@@ -115,6 +198,24 @@ namespace RoadOfGrowth.Utility
         }
 
         /// <summary>
+        /// 发送HttpPut请求(异步)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static async Task<string> PutAsync(this string uri, object data)
+        {
+            HttpContent content = new StringContent(SerializeObject(data));
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var request = await instance.PutAsync(uri, content);
+
+            return ConvertResponse(request);
+        }
+
+        /// <summary>
         /// 发送HttpDelete请求
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -124,6 +225,22 @@ namespace RoadOfGrowth.Utility
         public static T Delete<T>(this string uri, object conditions = null)
         {
             var request = DeleteAsync<T>(uri, conditions);
+
+            request.Wait();
+
+            return request.Result;
+        }
+
+        /// <summary>
+        /// 发送HttpDelete请求
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string Delete(this string uri, object conditions = null)
+        {
+            var request = DeleteAsync(uri, conditions);
 
             request.Wait();
 
@@ -147,6 +264,22 @@ namespace RoadOfGrowth.Utility
         }
 
         /// <summary>
+        /// 发送HttpDelete请求(异步)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static async Task<string> DeleteAsync(this string uri, object conditions = null)
+        {
+            uri.AssemblyUri(conditions);
+
+            var request = await instance.DeleteAsync(uri);
+
+            return ConvertResponse(request);
+        }
+
+        /// <summary>
         /// 组装uri请求
         /// </summary>
         /// <param name="uri"></param>
@@ -164,7 +297,7 @@ namespace RoadOfGrowth.Utility
                 int count = _condition.Count;
                 foreach (var item in _condition)
                 {
-                    urlParams.Append($"{item.Key}={System.Web.HttpUtility.UrlEncode(SerializeObject(item.Value))}");
+                    urlParams.Append($"{item.Key}={HttpUtility.UrlEncode(SerializeObject(item.Value))}");
                     index++;
 
                     if (index < count)
@@ -189,6 +322,19 @@ namespace RoadOfGrowth.Utility
             readTask.Wait();
 
             return DeserializeObject<T>(readTask.Result);
+        }
+
+        /// <summary>
+        /// 获取string格式响应数据
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private static string ConvertResponse(HttpResponseMessage response)
+        {
+            var readTask = response.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            return readTask.Result;
         }
 
         /// <summary>
