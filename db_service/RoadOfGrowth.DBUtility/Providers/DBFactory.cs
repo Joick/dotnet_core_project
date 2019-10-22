@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace RoadOfGrowth.DBUtility
+namespace RoadOfGrowth.DBUtility.Providers
 {
     /// <summary>
     /// 数据连接工厂
@@ -15,12 +15,12 @@ namespace RoadOfGrowth.DBUtility
         public static IDbConnection InitConnection(string dbName)
         {
             IDbConnection connection;
-            var dbTypeName = ConfigUtility.GetSectionValueDeep("ConnectionConfigs", dbName, "dbType");
+            var dbTypeName = ConfigUtility.GetSectionValue("ConnectionConfigs", dbName, "dbType");
 
             //获取配置进行转换
             var dbType = GetDataBaseType(dbTypeName);
 
-            var strConn = ConfigUtility.GetSectionValueDeep("ConnectionConfigs", dbName, "ConnectionString");
+            var strConn = ConfigUtility.GetSectionValue("ConnectionConfigs", dbName, "ConnectionString");
 
             switch (dbType)
             {
@@ -43,12 +43,41 @@ namespace RoadOfGrowth.DBUtility
                 default:
                     connection = null;
                     break;
-                    //case DatabaseType.DB2:
-                    //    //connection = new System.Data.OleDb.OleDbConnection(strConn);
-                    //    break;
             }
 
             return connection;
+        }
+
+        public static BaseDbProvider InitProvider(string dbName)
+        {
+            BaseDbProvider provider;
+
+            var dbTypeName = ConfigUtility.GetSectionValue("ConnectionConfigs", dbName, "dbType");
+            var dbType = GetDataBaseType(dbTypeName);
+
+            switch (dbType)
+            {
+                case DatabaseType.MySql:
+                    provider = new MySqlProvider(dbName);
+                    break;
+                //case DatabaseType.SqlServer:
+                //    //provider = new SqlServerProvider(dbName);
+                //    break;
+                //case DatabaseType.Npgsql:
+                //    //provider = new NpgsqlProvider(dbName);
+                //    break;
+                //case DatabaseType.Sqlite:
+                //    //provider = new SQLiteProvider(dbName);
+                //    break;
+                //case DatabaseType.Oracle:
+                //    //provider = new OracleProvider(dbName);
+                //    break;
+                default:
+                    provider = null;
+                    break;
+            }
+
+            return provider;
         }
 
         /// <summary>

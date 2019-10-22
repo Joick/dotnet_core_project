@@ -6,6 +6,6 @@ namespace RoadOfGrowth.DBRepository.Interface
 {
     public partial interface ILogService : IDependency
     {
-        void Insert();
+        int Insert();
     }
 }

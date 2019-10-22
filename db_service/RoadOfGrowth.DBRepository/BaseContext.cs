@@ -1,5 +1,4 @@
-﻿using RoadOfGrowth.DBUtility;
-using System.Data;
+﻿using RoadOfGrowth.DBUtility.Providers;
 
 namespace RoadOfGrowth.DBRepository.Implement
 {
@@ -8,26 +7,15 @@ namespace RoadOfGrowth.DBRepository.Implement
     /// </summary>
     public abstract class BaseContext
     {
-        IDbConnection dbContext;
-        string databaseName;
+        BaseDbProvider dbProvider;
+        readonly string databaseName;
 
-        public BaseContext(string dbName)
+        protected BaseContext(string dbName)
         {
             databaseName = dbName;
         }
 
-        protected IDbConnection DbContext
-        {
-            get
-            {
-                if (dbContext == null)
-                {
-                    dbContext = DBFactory.InitConnection(databaseName);
-                }
-
-                return dbContext;
-            }
-        }
+        public BaseDbProvider DbProvider => dbProvider ?? (dbProvider = DBFactory.InitProvider(databaseName));
     }
 
     public partial class UserService : BaseContext

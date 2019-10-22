@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoadOfGrowth.DBRepository\RoadOfGrowth.DBRepository.csproj" />
+    <ProjectReference Include="..\RoadOfGrowth.DBUtility\RoadOfGrowth.DBUtility.csproj" />
   </ItemGroup>
 
 </Project>

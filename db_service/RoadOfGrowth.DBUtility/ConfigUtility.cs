@@ -51,21 +51,11 @@ namespace RoadOfGrowth.DBUtility
         }
 
         /// <summary>
-        /// 获取区域对象值
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static string GetSectionValue(string key)
-        {
-            return GetInstance().GetSection(key).Value;
-        }
-
-        /// <summary>
         /// 获取指定键的值
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public static string GetSectionValueDeep(params string[] keys)
+        public static string GetSectionValue(params string[] keys)
         {
             if (keys == null || keys.Length == 0)
             {
@@ -89,23 +79,20 @@ namespace RoadOfGrowth.DBUtility
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public static Dictionary<string, object> GetSectionObjDeep(params string[] keys)
+        public static Dictionary<string, object> GetSectionObj(params string[] keys)
         {
             if (keys == null || keys.Length == 0)
             {
                 return default;
             }
 
-            IConfigurationSection section = GetInstance().GetSection(keys[0]);
+            string _path = string.Join(":", keys);
+
+            IConfigurationSection section = GetInstance().GetSection(_path);
 
             if (section == null)
             {
                 return default;
-            }
-
-            foreach (var key in keys)
-            {
-                section = section.GetSection(key);
             }
 
             return section.ToDictionary();
@@ -126,24 +113,6 @@ namespace RoadOfGrowth.DBUtility
             }
 
             return data;
-        }
-
-        /// <summary>
-        /// 获取区域对象内指定键值
-        /// </summary>
-        /// <param name="section">区域名</param>
-        /// <param name="key">键</param>
-        /// <returns></returns>
-        public static string GetSectionValue(string section, string key)
-        {
-            var sectionObj = GetInstance().GetSection(section);
-
-            if (sectionObj != null)
-            {
-                return sectionObj.GetSection(key).Value;
-            }
-
-            return null;
         }
     }
 }

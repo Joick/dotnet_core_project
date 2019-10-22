@@ -9,7 +9,7 @@ namespace RoadOfGrowth.DBRepository.Implement
         {
             string sql = $"select account from sys_user where id={id}";
 
-            return DbContext.QueryFirstOrDefault<string>(sql);
+            return DbProvider.DbConn.QueryFirstOrDefault<string>(sql);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace RoadOfGrowth.DBWebService.Controllers
         public static IUserService _userService;
         public static ILogService _logService;
 
-        public ValuesController(IUserService userService,ILogService logService)
+        public ValuesController(IUserService userService, ILogService logService)
         {
             _userService = userService;
             _logService = logService;
@@ -21,7 +21,6 @@ namespace RoadOfGrowth.DBWebService.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
             string temp = _userService.GetUserAccount(1);
-            _logService.Insert();
             return new string[] { "value1", "value2", temp };
         }
 
@@ -29,7 +28,8 @@ namespace RoadOfGrowth.DBWebService.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            string temp = _userService.GetUserAccount(1);
+            return temp;
         }
 
         // POST api/values
