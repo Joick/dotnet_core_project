@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
-using RoadOfGrowth.Utility;
+using RoadOfGrowth.ExternalService;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -38,7 +38,7 @@ namespace RoadOfGrowth.Web.Middlewares
             }
             else
             {
-                LogRequest(request, out string timestamp);
+                string timestamp = await LogRequest(request);
 
                 var originalBodyStream = context.Response.Body;
 
@@ -60,10 +60,13 @@ namespace RoadOfGrowth.Web.Middlewares
         /// </summary>
         /// <param name="request"></param>
         /// <param name="timestamp"></param>
-        private static void LogRequest(HttpRequest request, out string timestamp)
+        private static async Task<string> LogRequest(HttpRequest request)
         {
-            timestamp = DateTime.Now.ToString("yyMMddHHmmssfff");
-            LogUtility.Info($"REQ_{timestamp}【{request.Method.ToUpper()}】:{request.Host.Value}{request.Path.Value}{request.QueryString.Value}\r\nBody:{GetRequestBody(request)}");
+            string timestamp = DateTime.Now.ToString("yyMMddHHmmssfff");
+
+            await RabbitMQUtility.PushLog($"REQ_{timestamp}【{request.Method.ToUpper()}】:{request.Host.Value}{request.Path.Value}{request.QueryString.Value}\r\nBody:{GetRequestBody(request)}");
+
+            return timestamp;
         }
 
         /// <summary>
@@ -72,9 +75,11 @@ namespace RoadOfGrowth.Web.Middlewares
         /// <param name="response"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        private async Task LogResponseAsync(HttpResponse response, string timestamp)
+        private static async Task LogResponseAsync(HttpResponse response, string timestamp)
         {
-            LogUtility.Info($"RESP_{timestamp}：{ await GetResponse(response) }");
+            string message = $"RESP_{timestamp}：{ await GetResponse(response) }";
+
+            await RabbitMQUtility.PushLog(message);
         }
 
         /// <summary>
@@ -101,7 +106,7 @@ namespace RoadOfGrowth.Web.Middlewares
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public async Task<string> GetResponse(HttpResponse response)
+        public static async Task<string> GetResponse(HttpResponse response)
         {
             response.Body.Seek(0, SeekOrigin.Begin);
             var text = await new StreamReader(response.Body).ReadToEndAsync();

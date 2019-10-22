@@ -13,9 +13,7 @@ namespace RoadOfGrowth.ExternalService
         private static readonly string QueueName = Config["QueueName"].ToString();
         private static readonly ConnectionFactory Factory = new ConnectionFactory()
         {
-            HostName = Config["host"].ToString(),
-            UserName = Config["UserName"].ToString(),
-            Password = Config["Password"].ToString()
+            HostName = Config["Host"].ToString()
         };
 
         /// <summary>
@@ -23,14 +21,14 @@ namespace RoadOfGrowth.ExternalService
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="pushData"></param>
-        public static async Task PushLog<T>(T pushData, string routingKey = "")
+        public static async Task PushLog<T>(T pushData)
         {
             await Task.Factory.StartNew(() =>
             {
                 using (var connection = Factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(QueueName, false, false, false, null);
+                    channel.QueueDeclare(QueueName, true, false, false, null);
 
                     var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pushData));
                     var properties = channel.CreateBasicProperties();
@@ -38,7 +36,32 @@ namespace RoadOfGrowth.ExternalService
                     // 持久化消息
                     properties.Persistent = true;
 
-                    channel.BasicPublish(exchange: "", routingKey: routingKey, basicProperties: properties, body: body);
+                    channel.BasicPublish(exchange: "", routingKey: QueueName, basicProperties: properties, body: body);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 入队
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="pushData"></param>
+        public static async Task PushLog(string logData)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                using (var connection = Factory.CreateConnection())
+                using (var channel = connection.CreateModel())
+                {
+                    channel.QueueDeclare(QueueName, true, false, false, null);
+
+                    var body = Encoding.UTF8.GetBytes(logData);
+                    var properties = channel.CreateBasicProperties();
+
+                    // 持久化消息
+                    properties.Persistent = true;
+
+                    channel.BasicPublish(exchange: "", routingKey: QueueName, basicProperties: properties, body: body);
                 }
             });
         }
