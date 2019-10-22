@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadOfGrowth.DBRepository", "RoadOfGrowth.DBRepository\RoadOfGrowth.DBRepository.csproj", "{3DB498C4-A7C0-48EE-BA29-CDB63BCB567A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.DBRepository", "RoadOfGrowth.DBRepository\RoadOfGrowth.DBRepository.csproj", "{3DB498C4-A7C0-48EE-BA29-CDB63BCB567A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadOfGrowth.DBUtility", "RoadOfGrowth.DBUtility\RoadOfGrowth.DBUtility.csproj", "{676FF7EF-6742-464F-8FB5-A7AF0FBFB096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.DBUtility", "RoadOfGrowth.DBUtility\RoadOfGrowth.DBUtility.csproj", "{676FF7EF-6742-464F-8FB5-A7AF0FBFB096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadOfGrowth.DBWebService", "RoadOfGrowth.DBWebService\RoadOfGrowth.DBWebService.csproj", "{4B1E91CE-E95E-4418-8CF1-1816A6587685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoadOfGrowth.DBWebService", "RoadOfGrowth.DBWebService\RoadOfGrowth.DBWebService.csproj", "{4B1E91CE-E95E-4418-8CF1-1816A6587685}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

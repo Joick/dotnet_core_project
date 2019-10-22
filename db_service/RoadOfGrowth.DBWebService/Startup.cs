@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RoadOfGrowth.DBWebService.Configuration;
+using RoadOfGrowth.DBWebService.Middlewares;
 using System;
 
 namespace RoadOfGrowth.DBWebService
@@ -45,6 +46,9 @@ namespace RoadOfGrowth.DBWebService
             {
                 app.UseHsts();
             }
+
+            app.UseExceptionLog();
+            app.UseLogRequest();
 
             app.UseHttpsRedirection();
             app.UseMvc();
