@@ -14,9 +14,9 @@ namespace CoreTask.Startup
     /// <summary>
     /// 启动
     /// </summary>
-    public class Start
+    public static class Start
     {
-        private static readonly string filePath;
+        private static readonly string filePath = $"{AppDomain.CurrentDomain.BaseDirectory}appsettings.json";
         private static readonly ILoggerRepository repository = LogManager.CreateRepository("NETCoreRepository");
         private static readonly ILog log;
 
@@ -32,7 +32,6 @@ namespace CoreTask.Startup
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
             log = LogManager.GetLogger(repository.Name, "NETCorelog4net");
 
-            filePath = $"{AppDomain.CurrentDomain.BaseDirectory}appsettings.json";
             if (File.Exists(filePath))
             {
                 var text = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(filePath));
@@ -73,8 +72,18 @@ namespace CoreTask.Startup
                         {
                             var body = ea.Body;
                             var message = Encoding.UTF8.GetString(body);
-                            Console.WriteLine(" [x] Received {0}", message);
-                            log.Info(message);
+                            var logObj = JsonConvert.DeserializeObject<LogObject>(message);
+
+                            Console.WriteLine(" [x] Received {0}", logObj.Message);
+
+                            if (logObj.Error == null)
+                            {
+                                log.Info(logObj.Message);
+                            }
+                            else
+                            {
+                                log.Error(logObj.Message, logObj.Error);
+                            }
 
                             // 手动发送确认信号
                             channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
@@ -93,6 +102,16 @@ namespace CoreTask.Startup
             {
                 log.Error($"处理出现错误,Exception:{ex}");
             }
+        }
+
+        [Serializable]
+        public class LogObject
+        {
+            [JsonProperty(PropertyName = "msg")]
+            public string Message { get; set; }
+
+            [JsonProperty(PropertyName = "err")]
+            public Exception Error { get; set; }
         }
     }
 }
