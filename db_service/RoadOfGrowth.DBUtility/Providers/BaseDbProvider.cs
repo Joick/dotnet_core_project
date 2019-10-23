@@ -22,16 +22,18 @@ namespace RoadOfGrowth.DBUtility.Providers
         /// 添加单项数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">新增数据</param>
+        /// <param name="isReturnId">是否返回新增数据id</param>
+        /// <returns>新增id</returns>
         public abstract int Insert<T>(T data);
 
         /// <summary>
         /// 更新单项数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">更新数据集</param>
+        /// <param name="isReturnRowCount">是否返回受影响行数</param>
+        /// <returns>受影响行数</returns>
         public abstract int Update<T>(T data);
 
         /// <summary>

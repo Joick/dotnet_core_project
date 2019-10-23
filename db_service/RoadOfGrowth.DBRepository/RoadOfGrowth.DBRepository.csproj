@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RoadOfGrowth.DBCommon\RoadOfGrowth.DBCommon.csproj" />
     <ProjectReference Include="..\RoadOfGrowth.DBUtility\RoadOfGrowth.DBUtility.csproj" />
   </ItemGroup>
 
