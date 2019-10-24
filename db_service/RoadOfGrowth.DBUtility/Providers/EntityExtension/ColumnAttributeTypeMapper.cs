@@ -71,13 +71,14 @@ namespace RoadOfGrowth.DBUtility.Providers.EntityExtension
         }
     }
 
-    public class ColumnAttributeTypeMapper<T> : FallbackTypeMapper
+    public class ColumnAttributeTypeMapper : FallbackTypeMapper
     {
-        public ColumnAttributeTypeMapper()
+        public ColumnAttributeTypeMapper(Type objType)
             : base(new SqlMapper.ITypeMap[]
                 {
                     new CustomPropertyTypeMap(
-                       typeof(T),
+                        objType,
+                       //typeof(T),
                        (type, columnName) =>
                            type.GetProperties().FirstOrDefault(prop =>
                                prop.GetCustomAttributes(false)
@@ -85,7 +86,7 @@ namespace RoadOfGrowth.DBUtility.Providers.EntityExtension
                                    .Any(attr => attr.Name == columnName)
                                )
                        ),
-                    new DefaultTypeMap(typeof(T))
+                    new DefaultTypeMap(objType)
                 })
         {
         }

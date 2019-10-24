@@ -5,11 +5,8 @@ using System.Text;
 
 namespace RoadOfGrowth.DBCommon.Entities
 {
-    public class LogRequest
+    public class LogRequest : BaseEntity
     {
-        [Column(Name = "id")]
-        public long Id { get; set; }
-
         [Column(Name = "url")]
         public string Url { get; set; }
 

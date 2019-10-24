@@ -1,5 +1,8 @@
 ﻿using RoadOfGrowth.DBUtility.Providers;
 
+/// <summary>
+/// 命名空间一定要加Implement 与Implement文件夹中的实现类相同
+/// </summary>
 namespace RoadOfGrowth.DBRepository.Implement
 {
     /// <summary>

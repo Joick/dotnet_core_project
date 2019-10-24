@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -35,6 +37,19 @@ namespace RoadOfGrowth.DBUtility
             }
 
             return assemblies;
+        }
+
+        /// <summary>
+        /// 获取集合内的所有类对象
+        /// </summary>
+        /// <param name="assemblyName"></param>
+        /// <returns></returns>
+        public static IEnumerable<Type> ListType(string assemblyName)
+        {
+            var objects = from t in Assembly.Load(assemblyName).GetTypes()
+                          where t.IsClass && t.Namespace.Contains(assemblyName, StringComparison.InvariantCultureIgnoreCase)
+                          select t;
+            return objects;
         }
 
     }
