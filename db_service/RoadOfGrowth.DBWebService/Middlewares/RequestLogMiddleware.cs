@@ -18,13 +18,13 @@ namespace RoadOfGrowth.DBWebService.Middlewares
     {
         readonly RequestDelegate _next;
         readonly Stopwatch _stopwatch;
-        readonly ILogService _logSev;
+        readonly ILogRequestService _logReqSev;
 
-        public RequestLogMiddleware(RequestDelegate next, ILogService logSev)
+        public RequestLogMiddleware(RequestDelegate next, ILogRequestService logReqSev)
         {
             _next = next;
             _stopwatch = new Stopwatch();
-            _logSev = logSev;
+            _logReqSev = logReqSev;
         }
 
         public async Task Invoke(HttpContext context)
@@ -40,7 +40,7 @@ namespace RoadOfGrowth.DBWebService.Middlewares
             }
             else
             {
-                int id = _logSev.Insert();
+                int id = _logReqSev.Insert();
                 string timestamp = await LogRequest(request);
 
                 var originalBodyStream = context.Response.Body;

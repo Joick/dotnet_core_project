@@ -24,16 +24,18 @@ namespace RoadOfGrowth.DBRepository.Implement
     public partial class UserService : BaseContext
     {
         public UserService()
-            : base("MainDb")
-        {
-        }
+            : base("MainDb") { }
     }
 
-    public partial class LogService : BaseContext
+    public partial class LogRequestService : BaseContext
     {
-        public LogService()
-            : base("LogDb")
-        {
-        }
+        public LogRequestService()
+            : base("LogDb") { }
+    }
+
+    public partial class LogExceptionService : BaseContext
+    {
+        public LogExceptionService()
+            : base("LogDb") { }
     }
 }

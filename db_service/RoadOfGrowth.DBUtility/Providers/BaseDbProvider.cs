@@ -28,6 +28,13 @@ namespace RoadOfGrowth.DBUtility.Providers
         public abstract int Insert<T>(T data);
 
         /// <summary>
+        /// 添加单项数据
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public abstract int Insert(string sql, object param = null);
+
+        /// <summary>
         /// 更新单项数据
         /// </summary>
         /// <typeparam name="T"></typeparam>

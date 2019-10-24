@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using RoadOfGrowth.DBRepository.Interface;
 using RoadOfGrowth.DBUtility;
 using System;
 using System.IO;
@@ -15,10 +16,12 @@ namespace RoadOfGrowth.DBWebService.Middlewares
     public class ExceptionLogMiddleware
     {
         readonly RequestDelegate _next;
+        readonly ILogExceptionService _logExSev;
 
-        public ExceptionLogMiddleware(RequestDelegate next)
+        public ExceptionLogMiddleware(RequestDelegate next, ILogExceptionService logExSev)
         {
             _next = next;
+            _logExSev = logExSev;
         }
 
         public async Task Invoke(HttpContext context)
@@ -38,9 +41,11 @@ namespace RoadOfGrowth.DBWebService.Middlewares
         /// </summary>
         /// <param name="context"></param>
         /// <param name="ex"></param>
-        private static async Task HandleException(HttpContext context, Exception ex)
+        private async Task HandleException(HttpContext context, Exception ex)
         {
-            string message = $"请求接口:{context.Request.Scheme}://{context.Request.Host}{(context.Request.Path.HasValue ? context.Request.Path.Value : "")}\n请求报文:{GetRequestBody(context.Request)}\n报错:";
+            string message = $"请求接口:{context.Request.Scheme}://{context.Request.Host}{(context.Request.Path.HasValue ? context.Request.Path.Value : "")}\n请求报文:{GetRequestBody(context.Request)}";
+
+            _logExSev.Insert(message, ex);
 
             await RabbitMQUtility.PushLog(new { msg = message, err = ex });
 

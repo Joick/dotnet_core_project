@@ -28,6 +28,11 @@ namespace RoadOfGrowth.DBUtility.Providers
             return 1;
         }
 
+        public override int Insert(string sql, object param = null)
+        {
+            return 1;
+        }
+
         public override QueryPageModel QueryPage(string sql)
         {
             return new QueryPageModel();

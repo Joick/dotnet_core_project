@@ -8,13 +8,11 @@ namespace RoadOfGrowth.DBWebService.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public static IUserService _userService;
-        public static ILogService _logService;
+        readonly IUserService _userService;
 
-        public ValuesController(IUserService userService, ILogService logService)
+        public ValuesController(IUserService userService)
         {
             _userService = userService;
-            _logService = logService;
         }
         // GET api/values
         [HttpGet]

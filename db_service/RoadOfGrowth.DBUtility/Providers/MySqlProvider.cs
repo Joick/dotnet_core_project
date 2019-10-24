@@ -61,6 +61,41 @@ namespace RoadOfGrowth.DBUtility.Providers
             }
         }
 
+        public override int Insert(string sql, object param = null)
+        {
+            DbConn.Open();
+            var trans = DbConn.BeginTransaction();
+
+            try
+            {
+                DbConn.Execute(sql, param);
+
+                int id = DbConn.QueryFirstOrDefault<int>(queryIdentitySql);
+
+                if (id > 0)
+                {
+                    trans.Commit();
+                }
+                else
+                {
+                    trans.Rollback();
+                }
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                RabbitMQUtility.PushLog(new { msg = "操作数据库Insert错误", err = ex });
+                return 0;
+            }
+            finally
+            {
+                trans.Dispose();
+                DbConn.Close();
+            }
+        }
+
         public override QueryPageModel QueryPage(string sql)
         {
             return new QueryPageModel();
