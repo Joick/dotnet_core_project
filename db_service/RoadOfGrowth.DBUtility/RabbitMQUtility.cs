@@ -55,7 +55,7 @@ namespace RoadOfGrowth.DBUtility
                 using (var connection = Factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(QueueName, false, false, false, null);
+                    channel.QueueDeclare(QueueName, true, false, false, null);
 
                     var body = Encoding.UTF8.GetBytes(logData);
                     var properties = channel.CreateBasicProperties();
@@ -63,7 +63,7 @@ namespace RoadOfGrowth.DBUtility
                     // 持久化消息
                     properties.Persistent = true;
 
-                    channel.BasicPublish(exchange: "", routingKey: routingKey, basicProperties: properties, body: body);
+                    channel.BasicPublish(exchange: "", routingKey: QueueName, basicProperties: properties, body: body);
                 }
             });
         }

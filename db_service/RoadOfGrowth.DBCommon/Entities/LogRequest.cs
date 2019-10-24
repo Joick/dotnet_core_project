@@ -49,5 +49,11 @@ namespace RoadOfGrowth.DBCommon.Entities
         /// </summary>
         [Column(Name = "processing_time")]
         public int ProcessingTime => ResponseTime.HasValue ? (ResponseTime.Value - RequestTime).Seconds : 0;
+
+        /// <summary>
+        /// 请求时间戳
+        /// </summary>
+        [Column(Name = "req_timestamp")]
+        public string RequestTimestamp { get; set; }
     }
 }

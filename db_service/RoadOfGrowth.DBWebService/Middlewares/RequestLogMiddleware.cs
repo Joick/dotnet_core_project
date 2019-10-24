@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using RoadOfGrowth.DBCommon.Entities;
 using RoadOfGrowth.DBRepository.Interface;
 using RoadOfGrowth.DBUtility;
 using System;
@@ -40,7 +41,8 @@ namespace RoadOfGrowth.DBWebService.Middlewares
             }
             else
             {
-                int id = _logReqSev.Insert();
+                int id = _logReqSev.Insert($"{ request.Host.Value}{ request.Path.Value}{ request.QueryString.Value}", request.Method.ToUpper(), GetRequestBody(request));
+
                 string timestamp = await LogRequest(request);
 
                 var originalBodyStream = context.Response.Body;
@@ -51,7 +53,7 @@ namespace RoadOfGrowth.DBWebService.Middlewares
 
                     await _next(context);
 
-                    await LogResponseAsync(context.Response, timestamp);
+                    await LogResponseAsync(context.Response, timestamp, id);
 
                     await responseBody.CopyToAsync(originalBodyStream);
                 }
@@ -78,9 +80,12 @@ namespace RoadOfGrowth.DBWebService.Middlewares
         /// <param name="response"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        private static async Task LogResponseAsync(HttpResponse response, string timestamp)
+        private async Task LogResponseAsync(HttpResponse response, string timestamp, int id)
         {
-            string message = $"RESP_{timestamp}：{ await GetResponse(response) }";
+            string content = await GetResponse(response);
+            string message = $"RESP_{timestamp}：{content}";
+
+            _logReqSev.Update(new LogRequest { Id = id, ResponseBody = content, ResponseTime = DateTime.Now, RequestTimestamp = timestamp });
 
             await RabbitMQUtility.PushLog(message);
         }
