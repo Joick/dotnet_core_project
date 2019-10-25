@@ -1,4 +1,13 @@
-﻿using System.ServiceProcess;
+﻿using CoreTask.Utility;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.ServiceProcess;
+using System.Text;
+using System.Threading;
 
 namespace CoreTask.Startup
 {
@@ -13,11 +22,7 @@ namespace CoreTask.Startup
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            using (var task = new LogTask())
-            {
-                ServiceBase.Run(task);
-            }
+            LogTask.Startup();
         }
-
     }
 }
