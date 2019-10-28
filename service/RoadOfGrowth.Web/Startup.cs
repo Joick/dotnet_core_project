@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoadOfGrowth.Web.Controllers;
 using RoadOfGrowth.Web.Middlewares;
 using RoadOfGrowth.Web.Registers;
 using Swashbuckle.AspNetCore.Swagger;
@@ -27,31 +28,49 @@ namespace RoadOfGrowth.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // 添加版本控制
+            services.AddApiVersioning(o =>
+            {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+            }).AddVersionedApiExplorer(option =>
+            {
+                option.GroupNameFormat = "'v'VVV";
+                option.AssumeDefaultVersionWhenUnspecified = true;
+            });
+
             services.AddSwaggerGen(s =>
             {
-                //s.DocInclusionPredicate((version, apiDesc) =>
-                //{
-                //    if (version.Equals(apiDesc.GroupName))
-                //        return false;
-
-                //    var values = apiDesc.RelativePath.Split("/")
-                //    .Select(v => v.Replace("v{version}", apiDesc.GroupName));
-
-                //    apiDesc.RelativePath = string.Join("/", values);
-
-                //    return true;
-                //});
-                s.SwaggerDoc("v1", new Info
+                typeof(ApiVersions).GetEnumNames().ToList().ForEach(v =>
                 {
-                    Contact = new Contact
+                    s.SwaggerDoc(v, new Info
                     {
-                        Name = "test name",
-                        Email = "test email",
-                        Url = "test url"
-                    },
-                    Title = "test title",
-                    Description = "test description",
-                    Version = "v1"
+                        Title = "Webapi document",
+                        Description = "no description",
+                        Version = v
+                    });
+
+                    s.DocInclusionPredicate((version, apiDesc) =>
+                    {
+                        if (!apiDesc.RelativePath.Split('/')[1].Equals(version))
+                            return false;
+
+                        var values = apiDesc.RelativePath
+                        .Split('/')
+                        .Select(i => i.Replace("v{version}", apiDesc.GroupName));
+
+                        apiDesc.RelativePath = string.Join("/", values);
+
+                        // 取消模拟请求参数中api-version字段
+                        var _versionParam = apiDesc.ParameterDescriptions.FirstOrDefault(p => p.Name.Equals("api-version"));
+                        if (_versionParam != null)
+                        {
+                            apiDesc.ParameterDescriptions.Remove(_versionParam);
+                        }
+
+                        return true;
+                    });
                 });
             });
 
@@ -86,7 +105,10 @@ namespace RoadOfGrowth.Web
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "lalala");
+                typeof(ApiVersions).GetEnumNames().ToList().ForEach(v =>
+                {
+                    s.SwaggerEndpoint($"/swagger/{v}/swagger.json", $"webapi document {v}");
+                });
             });
 
             app.UseMvc(routes =>

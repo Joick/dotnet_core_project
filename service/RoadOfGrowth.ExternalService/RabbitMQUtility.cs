@@ -9,7 +9,7 @@ namespace RoadOfGrowth.ExternalService
 {
     public static class RabbitMQUtility
     {
-        private static readonly Dictionary<string, object> Config = ConfigUtility.GetSectionObjDeep("RabbitMQConfig", "ErrorLog");
+        private static readonly Dictionary<string, object> Config = ConfigUtility.GetSectionObj("RabbitMQConfig", "ErrorLog");
         private static readonly string QueueName = Config["QueueName"].ToString();
         private static readonly ConnectionFactory Factory = new ConnectionFactory()
         {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RoadOfGrowth.Repository;
-using RoadOfGrowth.Utility;
+using System.Collections.Generic;
 
-namespace RoadOfGrowth.Web.Controllers
+namespace RoadOfGrowth.Web.Controllers.v2
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : ApiV2Controller
     {
         public static ITestRepository _testRepository;
         public ValuesController(ITestRepository testRepository)
