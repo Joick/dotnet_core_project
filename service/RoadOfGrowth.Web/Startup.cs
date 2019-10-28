@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RoadOfGrowth.Web.Middlewares;
 using RoadOfGrowth.Web.Registers;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Linq;
 
 namespace RoadOfGrowth.Web
 {
@@ -24,6 +26,34 @@ namespace RoadOfGrowth.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(s =>
+            {
+                //s.DocInclusionPredicate((version, apiDesc) =>
+                //{
+                //    if (version.Equals(apiDesc.GroupName))
+                //        return false;
+
+                //    var values = apiDesc.RelativePath.Split("/")
+                //    .Select(v => v.Replace("v{version}", apiDesc.GroupName));
+
+                //    apiDesc.RelativePath = string.Join("/", values);
+
+                //    return true;
+                //});
+                s.SwaggerDoc("v1", new Info
+                {
+                    Contact = new Contact
+                    {
+                        Name = "test name",
+                        Email = "test email",
+                        Url = "test url"
+                    },
+                    Title = "test title",
+                    Description = "test description",
+                    Version = "v1"
+                });
+            });
 
             // 使用Autofac注入
             ContainerBuilder builder = new ContainerBuilder();
@@ -52,6 +82,12 @@ namespace RoadOfGrowth.Web
             app.UseHttpsRedirection();
 
             app.UseLogRequest();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "lalala");
+            });
 
             app.UseMvc(routes =>
             {
