@@ -69,7 +69,7 @@ namespace RoadOfGrowth.DBWebService.Middlewares
         {
             string timestamp = DateTime.Now.ToString("yyMMddHHmmssfff");
 
-            await RabbitMQUtility.PushLog($"REQ_{timestamp}【{request.Method.ToUpper()}】:{request.Host.Value}{request.Path.Value}{request.QueryString.Value}\r\nBody:{GetRequestBody(request)}");
+            await RabbitMQUtility.PushLog(new { msg = $"REQ_{timestamp}【{request.Method.ToUpper()}】:{request.Host.Value}{request.Path.Value}{request.QueryString.Value}\r\nBody:{GetRequestBody(request)}" });
 
             return timestamp;
         }
@@ -87,7 +87,7 @@ namespace RoadOfGrowth.DBWebService.Middlewares
 
             _logReqSev.Update(new LogRequest { Id = id, ResponseBody = content, ResponseTime = DateTime.Now, RequestTimestamp = timestamp });
 
-            await RabbitMQUtility.PushLog(message);
+            await RabbitMQUtility.PushLog(new { msg = message });
         }
 
         /// <summary>

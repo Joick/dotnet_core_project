@@ -10,6 +10,7 @@ using RoadOfGrowth.DBUtility;
 using RoadOfGrowth.DBUtility.Providers.EntityExtension;
 using RoadOfGrowth.DBWebService.Configuration;
 using RoadOfGrowth.DBWebService.Middlewares;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,15 @@ namespace RoadOfGrowth.DBWebService
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new Info
+                {
+                    Title = "Database Service",
+                });
+            });
+
             // 使用Autofac注入
             ContainerBuilder builder = new ContainerBuilder();
 
@@ -54,6 +64,13 @@ namespace RoadOfGrowth.DBWebService
 
             app.UseExceptionLog();
             app.UseLogRequest();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", $"database service document v1");
+            });
+
             app.UseHttpsRedirection();
             app.UseMvc();
 
