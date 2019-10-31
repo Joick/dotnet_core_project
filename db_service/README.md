@@ -4,10 +4,11 @@
 
 
 ![](https://img.shields.io/badge/.net%20core-v2.2-blue.svg)
-![](https://img.shields.io/badge/dapper-v2.0.30-orange.svg)
-![](https://img.shields.io/badge/rabbitmq-v3.8.0-purple.svg)
-![](https://img.shields.io/badge/rabbit.client-v5.1.1-green.svg)
-![](https://img.shields.io/badge/swagger-v4.0.1-brightgreen.svg)
+[![](https://img.shields.io/badge/AutoFac-v4.9.4-yellow.svg)](https://autofac.org/)
+[![](https://img.shields.io/badge/Dapper-v2.0.30-orange.svg)](https://github.com/StackExchange/Dapper)
+[![](https://img.shields.io/badge/rabbitmq-v3.8.0-purple.svg)](https://www.rabbitmq.com/)
+[![](https://img.shields.io/badge/rabbit.client-v5.1.1-green.svg)](https://www.rabbitmq.com/dotnet.html)
+[![](https://img.shields.io/badge/swagger-v4.0.1-brightgreen.svg)](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 
 </center>
 
@@ -21,12 +22,12 @@
 
 ### 介绍
 
-* 使用 ***RESTful*** 风格定义接口
-* 使用 ***swaggerui***，以便在开发过程中对接口的调试
-* 使用 ***AutoFac*** 替代 ***.netcore*** 自带的依赖注入
-* 使用 ***dapper*** 进行对数据库操作
+* 使用 [***RESTful***](http://www.ruanyifeng.com/blog/2011/09/restful.html) 风格定义接口
+* 使用 [***Swagger UI***](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)，以便在开发过程中对接口的调试
+* 使用 [***AutoFac***](https://autofac.org/) 替代 ***.netcore*** 自带的依赖注入
+* 使用 [***Dapper***](https://github.com/StackExchange/Dapper) 进行对数据库操作
 * 支持对多类型数据库的支持，以及单类型多库结构数据库情况的支持  
-* 使用 ***RabbitMQ*** 消息队列实现日志记录，记录请求数据包与响应数据包，同时定义全局错误拦截中间件，捕获未知异常日志  
+* 使用 [***RabbitMQ***](https://www.rabbitmq.com/dotnet.html) 消息队列实现日志记录，记录请求数据包与响应数据包，同时定义全局错误拦截中间件，捕获未知异常日志  
 
 
 ### 快速上手  
