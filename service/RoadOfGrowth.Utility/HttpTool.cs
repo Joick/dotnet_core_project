@@ -58,9 +58,11 @@ namespace RoadOfGrowth.Utility
         {
             uri.AssemblyUri(conditions);
 
-            var response = await instance.GetAsync(uri);
+            using (var response = await instance.GetAsync(uri))
+            {
+                return ConvertResponse(response);
+            }
 
-            return ConvertResponse(response);
         }
 
         /// <summary>
@@ -74,9 +76,10 @@ namespace RoadOfGrowth.Utility
         {
             uri.AssemblyUri(conditions);
 
-            var request = await instance.GetAsync(uri);
-
-            return ConvertResponse<T>(request);
+            using (var response = await instance.GetAsync(uri))
+            {
+                return ConvertResponse<T>(response);
+            }
         }
 
         /// <summary>
@@ -124,9 +127,10 @@ namespace RoadOfGrowth.Utility
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var request = await instance.PostAsync(uri, content);
-
-            return ConvertResponse<T>(request);
+            using (var response = await instance.PostAsync(uri, content))
+            {
+                return ConvertResponse<T>(response); 
+            }
         }
 
         /// <summary>
@@ -142,9 +146,10 @@ namespace RoadOfGrowth.Utility
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await instance.PostAsync(uri, content);
-
-            return ConvertResponse(response);
+            using (var response = await instance.PostAsync(uri, content))
+            {
+                return ConvertResponse(response); 
+            }
         }
 
         /// <summary>
@@ -192,9 +197,10 @@ namespace RoadOfGrowth.Utility
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var request = await instance.PutAsync(uri, content);
-
-            return ConvertResponse<T>(request);
+            using (var request = await instance.PutAsync(uri, content))
+            {
+                return ConvertResponse<T>(request); 
+            }
         }
 
         /// <summary>
@@ -210,9 +216,10 @@ namespace RoadOfGrowth.Utility
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var request = await instance.PutAsync(uri, content);
-
-            return ConvertResponse(request);
+            using (var response = await instance.PutAsync(uri, content))
+            {
+                return ConvertResponse(response); 
+            }
         }
 
         /// <summary>
@@ -258,9 +265,10 @@ namespace RoadOfGrowth.Utility
         {
             uri.AssemblyUri(conditions);
 
-            var request = await instance.DeleteAsync(uri);
-
-            return ConvertResponse<T>(request);
+            using (var response = await instance.DeleteAsync(uri))
+            {
+                return ConvertResponse<T>(response); 
+            }
         }
 
         /// <summary>
@@ -274,9 +282,10 @@ namespace RoadOfGrowth.Utility
         {
             uri.AssemblyUri(conditions);
 
-            var request = await instance.DeleteAsync(uri);
-
-            return ConvertResponse(request);
+            using (var response = await instance.DeleteAsync(uri))
+            {
+                return ConvertResponse(response); 
+            }
         }
 
         /// <summary>
