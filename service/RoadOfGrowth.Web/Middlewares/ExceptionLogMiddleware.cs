@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using RoadOfGrowth.ExternalService;
 using RoadOfGrowth.Utility;
 using System;
 using System.IO;
@@ -35,9 +36,11 @@ namespace RoadOfGrowth.Web.Middlewares
         /// </summary>
         /// <param name="context"></param>
         /// <param name="ex"></param>
-        private void HandleException(HttpContext context, Exception ex)
+        private async Task HandleException(HttpContext context, Exception ex)
         {
-            LogUtility.Error($"请求接口:{context.Request.Scheme}://{context.Request.Host}{(context.Request.Path.HasValue ? context.Request.Path.Value : "")}\n请求报文:{GetRequestBody(context.Request)}\n报错:", ex);
+            string message = $"请求接口:{context.Request.Scheme}://{context.Request.Host}{(context.Request.Path.HasValue ? context.Request.Path.Value : "")}\n请求报文:{GetRequestBody(context.Request)}\n报错:";
+
+            await RabbitMQUtility.PushLog(new { msg = message, err = ex });
 
             context.Response.Redirect($"{context.Request.Scheme}://{context.Request.Host}/common/error");
         }
