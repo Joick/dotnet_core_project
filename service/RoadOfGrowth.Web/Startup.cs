@@ -34,10 +34,6 @@ namespace RoadOfGrowth.Web
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
-            }).AddVersionedApiExplorer(option =>
-            {
-                option.GroupNameFormat = "'v'VVV";
-                option.AssumeDefaultVersionWhenUnspecified = true;
             });
 
             services.AddSwaggerGen(s =>
