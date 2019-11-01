@@ -1,16 +1,17 @@
-<center>
+<div align="center">
 
 # 说 明
 
 
 ![](https://img.shields.io/badge/.net%20core-v2.2-blue.svg)
-![](https://img.shields.io/badge/dapper-v2.0.30-orange.svg)
-![](https://img.shields.io/badge/log4net-v2.0.8-yellow.svg)
-![](https://img.shields.io/badge/rabbitmq-v3.8.0-purple.svg)
-![](https://img.shields.io/badge/rabbit.client-v5.1.1-green.svg)
-![](https://img.shields.io/badge/swagger-v4.0.1-brightgreen.svg)
+[![](https://img.shields.io/badge/AutoFac-v4.9.4-red.svg)](https://autofac.org/)
+[![](https://img.shields.io/badge/dapper-v2.0.30-green.svg)](https://github.com/StackExchange/Dapper)
+[![](https://img.shields.io/badge/log4net-v2.0.8-yellow.svg)](http://logging.apache.org/log4net/)
+[![](https://img.shields.io/badge/rabbitmq-v3.8.0-purple.svg)](https://www.rabbitmq.com/)
+[![](https://img.shields.io/badge/rabbit.client-v5.1.1-orange.svg)](https://www.rabbitmq.com/dotnet.html)
+[![](https://img.shields.io/badge/swagger-v4.0.1-brightgreen.svg)](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
 
-</center>
+</div>
 
 
 ### 目的
@@ -30,13 +31,13 @@
 
 ### 项目中都有什么？
 
-* 这个项目中首先用了 ***.net core 2.2*** 框架并在此基础上使用 ***AutoFac*** 来控制依赖注入  
-* 使用 ***dapper*** 来进行对数据库的访问操作的封装和使用  
+* 项目中使用 ***.net core 2.2*** 框架并在此基础上使用 [***AutoFac***](https://autofac.org/) 来控制依赖注入  
+* 使用 [***Dapper***](https://github.com/StackExchange/Dapper) 来进行对数据库的访问操作的封装和使用  
 * 数据库操作项目中实现同事对多类型数据库的支持，以及单类型多库结构数据库情况的支持  
-* 日志记录功能则是使用了 ***log4net*** 组件实现对日志的记录  
-* 使用 ***RabbitMQ*** 消息队列实现对日志的记录功能
+* 日志记录功能则是使用了 [***log4net***](http://logging.apache.org/log4net/) 组件实现对日志的记录  
+* 使用 [***RabbitMQ***](https://www.rabbitmq.com/) 消息队列实现对日志的记录功能
 * 使用接口版本控制，避免后续v2迭代时对v1版本接口造成影响
-* 使用 ***swaggerui***，以便在开发过程中对接口的调试
+* 使用 [***Swagger UI***](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)，以便在开发过程中对接口的调试
 
 
 ### 快速上手  
