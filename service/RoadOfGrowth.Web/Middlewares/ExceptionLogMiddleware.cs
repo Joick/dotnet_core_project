@@ -36,7 +36,7 @@ namespace RoadOfGrowth.Web.Middlewares
         /// </summary>
         /// <param name="context"></param>
         /// <param name="ex"></param>
-        private async Task HandleException(HttpContext context, Exception ex)
+        private async void HandleException(HttpContext context, Exception ex)
         {
             string message = $"请求接口:{context.Request.Scheme}://{context.Request.Host}{(context.Request.Path.HasValue ? context.Request.Path.Value : "")}\n请求报文:{GetRequestBody(context.Request)}\n报错:";
 
